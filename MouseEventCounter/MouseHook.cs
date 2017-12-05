@@ -6,6 +6,8 @@ namespace MouseEventCounter
 {
     public static class MouseHook
     {
+        public static event EventHandler MouseActionMove = delegate { };
+
         public static event EventHandler MouseActionLeftCick = delegate { };
 
         public static event EventHandler MouseActionMiddleCick = delegate { };
@@ -39,9 +41,12 @@ namespace MouseEventCounter
 
         private delegate IntPtr LowLevelMouseProc(int nCode, IntPtr wParam, IntPtr lParam);
 
-        private static IntPtr HookCallback(
-            int nCode, IntPtr wParam, IntPtr lParam)
+        private static IntPtr HookCallback(int nCode, IntPtr wParam, IntPtr lParam)
         {
+            if (nCode >= 0 && MouseMessages.WM_MOUSEMOVE == (MouseMessages)wParam)
+            {
+                MouseActionMove(null, new EventArgs());
+            }
             if (nCode >= 0 && MouseMessages.WM_LBUTTONDOWN == (MouseMessages)wParam)
             {
                 MouseActionLeftCick(null, new EventArgs());
@@ -69,11 +74,11 @@ namespace MouseEventCounter
 
         private enum MouseMessages
         {
-            WM_LBUTTONDOWN = 0x0201,
-            WM_LBUTTONUP = 0x0202,
-
             WM_MOUSEMOVE = 0x0200,
             WM_MOUSEWHEEL = 0x020A,
+
+            WM_LBUTTONDOWN = 0x0201,
+            WM_LBUTTONUP = 0x0202,
 
             WM_RBUTTONDOWN = 0x0204,
             WM_RBUTTONUP = 0x0205,

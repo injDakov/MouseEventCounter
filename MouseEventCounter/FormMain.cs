@@ -9,7 +9,8 @@ namespace MouseEventCounter
 {
     public partial class FormMain : Form
     {
-        private int _totalDelta;
+        private double _totalMouseMove;
+        private int _totalWheelMove;
         private int _totalLeftClicks;
         private int _totalRightClicks;
         private int _totalMiddleClicks;
@@ -19,6 +20,9 @@ namespace MouseEventCounter
         public FormMain()
         {
             InitializeComponent();
+
+            Resize += FormMain_Resize;
+            notifyIcon.Click += NotifyIcon_Click;
 
             LinkLabel.Link link = new LinkLabel.Link();
             link.LinkData = "http://www.dakov.net/";
@@ -36,17 +40,42 @@ namespace MouseEventCounter
 
             MouseHook.Start();
 
-            MouseHook.MouseActionLeftCick += new EventHandler(EventLeftCick);
-            MouseHook.MouseActionMiddleCick += new EventHandler(EventMiddleCick);
-            MouseHook.MouseActionRightCick += new EventHandler(EventRightCick);
-            MouseHook.MouseActionWheel += new EventHandler(EventWheel);
+            MouseHook.MouseActionMove += EventMouseMove;
+            MouseHook.MouseActionLeftCick += EventLeftCick;
+            MouseHook.MouseActionMiddleCick += EventMiddleCick;
+            MouseHook.MouseActionRightCick += EventRightCick;
+            MouseHook.MouseActionWheel += EventWheel;
 
             Closed += FormMain_Closed;
         }
 
+        private void FormMain_Resize(object sender, EventArgs e)
+        {
+            if (WindowState == FormWindowState.Minimized)
+            {
+                notifyIcon.Visible = true;
+                ShowInTaskbar = false;
+                notifyIcon.ShowBalloonTip(1000);
+            }
+            else if (WindowState == FormWindowState.Normal)
+            {
+                notifyIcon.Visible = false;
+                ShowInTaskbar = true;
+                WindowState = FormWindowState.Normal;
+            }
+        }
+
+        private void NotifyIcon_Click(object sender, EventArgs e)
+        {
+            notifyIcon.Visible = false;
+            ShowInTaskbar = true;
+            WindowState = FormWindowState.Normal;
+        }
+
         private void FormMain_Load(object sender, EventArgs e)
         {
-            txtWheelDistance.Text = _totalDelta.ToString();
+            txtMouseDistance.Text = ((int)_totalMouseMove).ToString();
+            txtWheelDistance.Text = _totalWheelMove.ToString();
             txtLeftClicks.Text = _totalLeftClicks.ToString();
             txtRightClicks.Text = _totalRightClicks.ToString();
             txtWheelClicks.Text = _totalMiddleClicks.ToString();
@@ -56,6 +85,13 @@ namespace MouseEventCounter
         private void FormMain_Closed(object sender, EventArgs e)
         {
             MouseHook.Start();
+        }
+
+        private void EventMouseMove(object sender, EventArgs e)
+        {
+            _totalMouseMove += 0.5; // Magic number, probably around 0.5 millimeter movement. :)
+
+            txtMouseDistance.Text = ((int)_totalMouseMove).ToString();
         }
 
         private void EventLeftCick(object sender, EventArgs e)
@@ -81,9 +117,9 @@ namespace MouseEventCounter
 
         private void EventWheel(object sender, EventArgs e)
         {
-            _totalDelta += 3; // Magic number, 3 millimeter movement. :)
+            _totalWheelMove += 2; // Magic number, probably around 2 millimeter movement. :)
 
-            txtWheelDistance.Text = _totalDelta.ToString();
+            txtWheelDistance.Text = _totalWheelMove.ToString();
         }
 
         private void linkDakovNet_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -97,14 +133,16 @@ namespace MouseEventCounter
             StartDate = DateTime.Now;
             txtStarDate.Text = StartDate.ToString("HH:mm:ss");
 
-            _totalDelta = 0;
+            _totalMouseMove = 0;
+            _totalWheelMove = 0;
             _totalLeftClicks = 0;
             _totalRightClicks = 0;
             _totalMiddleClicks = 0;
 
             txtElapsedTime.Text = "0";
 
-            txtWheelDistance.Text = _totalDelta.ToString();
+            txtMouseDistance.Text = ((int)_totalMouseMove).ToString();
+            txtWheelDistance.Text = _totalWheelMove.ToString();
             txtLeftClicks.Text = _totalLeftClicks.ToString();
             txtRightClicks.Text = _totalRightClicks.ToString();
             txtWheelClicks.Text = _totalMiddleClicks.ToString();
@@ -130,6 +168,7 @@ namespace MouseEventCounter
                 string.Concat("Period: ", StartDate.ToString("MM.dd.yyyy HH:mm:ss") , " - ", DateTime.Now.ToString("MM.dd.yyyy HH:mm:ss")),
                 string.Concat("Elapsed Time: " , ((int)(DateTime.Now - StartDate).TotalMinutes).ToString(), " minutes"),
 
+                string.Concat("Mouse Distance: " ,  txtMouseDistance.Text, " mm"),
                 string.Concat("Wheel Distance: " ,  txtWheelDistance.Text, " mm"),
                 string.Concat("Left Clicks: " , txtLeftClicks.Text),
                 string.Concat("Right Clicks: ", txtRightClicks.Text),

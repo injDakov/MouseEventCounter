@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormMain));
             this.txtWheelClicks = new System.Windows.Forms.TextBox();
             this.lblWheelClicks = new System.Windows.Forms.Label();
@@ -45,12 +46,15 @@
             this.txtStarDate = new System.Windows.Forms.TextBox();
             this.txtElapsedTime = new System.Windows.Forms.TextBox();
             this.btnSave = new System.Windows.Forms.Button();
+            this.txtMouseDistance = new System.Windows.Forms.TextBox();
+            this.lblMouseDistance = new System.Windows.Forms.Label();
+            this.notifyIcon = new System.Windows.Forms.NotifyIcon(this.components);
             this.SuspendLayout();
             // 
             // txtWheelClicks
             // 
             this.txtWheelClicks.Enabled = false;
-            this.txtWheelClicks.Location = new System.Drawing.Point(127, 104);
+            this.txtWheelClicks.Location = new System.Drawing.Point(127, 129);
             this.txtWheelClicks.Name = "txtWheelClicks";
             this.txtWheelClicks.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtWheelClicks.Size = new System.Drawing.Size(86, 20);
@@ -59,7 +63,7 @@
             // lblWheelClicks
             // 
             this.lblWheelClicks.AutoSize = true;
-            this.lblWheelClicks.Location = new System.Drawing.Point(57, 107);
+            this.lblWheelClicks.Location = new System.Drawing.Point(57, 132);
             this.lblWheelClicks.Name = "lblWheelClicks";
             this.lblWheelClicks.Size = new System.Drawing.Size(69, 13);
             this.lblWheelClicks.TabIndex = 7;
@@ -69,7 +73,7 @@
             // txtRightClicks
             // 
             this.txtRightClicks.Enabled = false;
-            this.txtRightClicks.Location = new System.Drawing.Point(127, 78);
+            this.txtRightClicks.Location = new System.Drawing.Point(127, 103);
             this.txtRightClicks.Name = "txtRightClicks";
             this.txtRightClicks.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtRightClicks.Size = new System.Drawing.Size(86, 20);
@@ -77,7 +81,7 @@
             // 
             // lblRightClicks
             // 
-            this.lblRightClicks.Location = new System.Drawing.Point(60, 81);
+            this.lblRightClicks.Location = new System.Drawing.Point(60, 106);
             this.lblRightClicks.Name = "lblRightClicks";
             this.lblRightClicks.Size = new System.Drawing.Size(66, 13);
             this.lblRightClicks.TabIndex = 5;
@@ -87,7 +91,7 @@
             // txtLeftClicks
             // 
             this.txtLeftClicks.Enabled = false;
-            this.txtLeftClicks.Location = new System.Drawing.Point(127, 52);
+            this.txtLeftClicks.Location = new System.Drawing.Point(127, 77);
             this.txtLeftClicks.Name = "txtLeftClicks";
             this.txtLeftClicks.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtLeftClicks.Size = new System.Drawing.Size(86, 20);
@@ -96,7 +100,7 @@
             // lblLeftClicks
             // 
             this.lblLeftClicks.AutoSize = true;
-            this.lblLeftClicks.Location = new System.Drawing.Point(70, 55);
+            this.lblLeftClicks.Location = new System.Drawing.Point(70, 80);
             this.lblLeftClicks.Name = "lblLeftClicks";
             this.lblLeftClicks.Size = new System.Drawing.Size(56, 13);
             this.lblLeftClicks.TabIndex = 3;
@@ -106,7 +110,7 @@
             // txtWheelDistance
             // 
             this.txtWheelDistance.Enabled = false;
-            this.txtWheelDistance.Location = new System.Drawing.Point(127, 26);
+            this.txtWheelDistance.Location = new System.Drawing.Point(127, 51);
             this.txtWheelDistance.Name = "txtWheelDistance";
             this.txtWheelDistance.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
             this.txtWheelDistance.Size = new System.Drawing.Size(86, 20);
@@ -115,7 +119,7 @@
             // lblWheelDistance
             // 
             this.lblWheelDistance.AutoSize = true;
-            this.lblWheelDistance.Location = new System.Drawing.Point(18, 29);
+            this.lblWheelDistance.Location = new System.Drawing.Point(18, 54);
             this.lblWheelDistance.Name = "lblWheelDistance";
             this.lblWheelDistance.Size = new System.Drawing.Size(108, 13);
             this.lblWheelDistance.TabIndex = 1;
@@ -125,7 +129,7 @@
             // lblCreatedBy
             // 
             this.lblCreatedBy.AutoSize = true;
-            this.lblCreatedBy.Location = new System.Drawing.Point(185, 156);
+            this.lblCreatedBy.Location = new System.Drawing.Point(179, 172);
             this.lblCreatedBy.Name = "lblCreatedBy";
             this.lblCreatedBy.Size = new System.Drawing.Size(59, 13);
             this.lblCreatedBy.TabIndex = 10;
@@ -136,7 +140,7 @@
             this.linkDakovNet.ActiveLinkColor = System.Drawing.Color.Navy;
             this.linkDakovNet.AutoSize = true;
             this.linkDakovNet.LinkColor = System.Drawing.Color.Navy;
-            this.linkDakovNet.Location = new System.Drawing.Point(244, 156);
+            this.linkDakovNet.Location = new System.Drawing.Point(238, 172);
             this.linkDakovNet.Name = "linkDakovNet";
             this.linkDakovNet.Size = new System.Drawing.Size(39, 13);
             this.linkDakovNet.TabIndex = 11;
@@ -200,11 +204,39 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
+            // txtMouseDistance
+            // 
+            this.txtMouseDistance.Enabled = false;
+            this.txtMouseDistance.Location = new System.Drawing.Point(127, 25);
+            this.txtMouseDistance.Name = "txtMouseDistance";
+            this.txtMouseDistance.RightToLeft = System.Windows.Forms.RightToLeft.Yes;
+            this.txtMouseDistance.Size = new System.Drawing.Size(86, 20);
+            this.txtMouseDistance.TabIndex = 19;
+            // 
+            // lblMouseDistance
+            // 
+            this.lblMouseDistance.AutoSize = true;
+            this.lblMouseDistance.Location = new System.Drawing.Point(18, 28);
+            this.lblMouseDistance.Name = "lblMouseDistance";
+            this.lblMouseDistance.Size = new System.Drawing.Size(109, 13);
+            this.lblMouseDistance.TabIndex = 18;
+            this.lblMouseDistance.Text = "Mouse Distance (mm)";
+            this.lblMouseDistance.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // notifyIcon
+            // 
+            this.notifyIcon.BalloonTipText = "Mouse Event Counter";
+            this.notifyIcon.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon.Icon")));
+            this.notifyIcon.Text = "notifyIcon";
+            this.notifyIcon.Visible = true;
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(450, 195);
+            this.ClientSize = new System.Drawing.Size(450, 201);
+            this.Controls.Add(this.txtMouseDistance);
+            this.Controls.Add(this.lblMouseDistance);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtElapsedTime);
             this.Controls.Add(this.txtStarDate);
@@ -224,7 +256,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "FormMain";
-            this.Text = "Mouse Event Counter v1.01";
+            this.Text = "Mouse Event Counter v1.2";
             this.Load += new System.EventHandler(this.FormMain_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -249,6 +281,9 @@
         private System.Windows.Forms.TextBox txtStarDate;
         private System.Windows.Forms.TextBox txtElapsedTime;
         private System.Windows.Forms.Button btnSave;
+        private System.Windows.Forms.TextBox txtMouseDistance;
+        private System.Windows.Forms.Label lblMouseDistance;
+        private System.Windows.Forms.NotifyIcon notifyIcon;
     }
 }
 
